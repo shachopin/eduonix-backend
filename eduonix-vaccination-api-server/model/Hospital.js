@@ -11,7 +11,7 @@ const Hospital = mongoose.model('Hospital', HospitalSchema);
 
 module.exports = {
     addNewHospital: function (hospitalData) {
-        return new Promise((resolve, reject) => {
+        return new Promise((resolve, reject) => {  //use moongoose callback but within the outter promise wrapper
             const hospital = new Hospital({
                 ...hospitalData
             });

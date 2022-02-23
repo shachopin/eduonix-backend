@@ -24,7 +24,7 @@ const addNewAuthor = function(data, callback){
     });
 }
 const getAllBooksWrittenByAuthor=function(authorId, callback){
-    Author.findById(authorId).populate('books').exec(function(error, result){
+    Author.findById(authorId).populate('books').exec(function(error, result){ //.exec for callback is like .then for promise
         if(error){
             console.error("Error Occured while Fetching Author's Book", error.message);
             return callback(error);
