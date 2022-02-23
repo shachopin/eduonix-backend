@@ -13,8 +13,8 @@ var app = express();
 
 (function(){
   app.use(logger('dev'));
-  app.use(express.json());
-  app.use(express.urlencoded({ extended: false }));
+  app.use(express.json()); //accept json body
+  app.use(express.urlencoded({ extended: false })); //accept form body
   app.use(cookieParser());
   app.use(express.static(path.join(__dirname, 'public')));
 

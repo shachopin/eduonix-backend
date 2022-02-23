@@ -1,3 +1,4 @@
+//because you put business logic in model, fat model thin controller(router), controller/router part is extremely easy and straigtforward
 var express = require('express');
 const { getAllAppointmentByUser } = require('../model/Appointment');
 const { userSignUp, validateLogin, editUser } = require('../model/User');
@@ -22,14 +23,14 @@ router.get('/:email', async function (req, res) {
   }
 });
 
-router.post('/signup', async function (req, res) {
+router.post('/signup', async function (req, res) { //for router/controller, no Promise is involved
   try {
     const data = await userSignUp(req.body);
     res.send({
       success: true,
       data
     });
-  } catch (error) {
+  } catch (error) { //here caused by either db issue or db no issue but user already existed (ALL DB RELATED ISSUE)
     console.error(error);
     res.status(500).send({
       success: false,
@@ -46,7 +47,7 @@ router.post('/login', async function (req, res) {
       success: true,
       data
     });
-  } catch (error) {
+  } catch (error) { //db issue or db no issue, but email not found(user being null) or if password doesn't match (ALL DB RELATED)
     console.error(error);
     res.status(500).send({
       success: false,
@@ -60,11 +61,11 @@ router.get('/my-appointments/:userId', async function (req, res) {
   try {
     const { userId } = req.params;
     const data = await getAllAppointmentByUser(userId);
-    res.send({
+    res.send({  //no matter if find userId or not
       success: true,
       data
     });
-  } catch (error) {
+  } catch (error) { //db issue
     console.error(error);
     res.status(500).send({
       success: false,
