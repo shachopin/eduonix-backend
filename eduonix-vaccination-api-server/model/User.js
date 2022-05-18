@@ -20,6 +20,7 @@ const UserSchema = new Schema({
     }
 });
 
+//model instance method
 //We use this on SignUp to hash password
 UserSchema.methods.setPassword = function (password) { //model instance's method defined in prototype, "this" refers to that model instance
     this.salt = crypto.randomBytes(16).toString('hex');
