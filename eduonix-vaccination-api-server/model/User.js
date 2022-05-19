@@ -62,9 +62,9 @@ module.exports = {
         return new Promise(async function (resolve, reject) { //return Promise wrapper for async function
             try {
                 const user = await UserSchema.methods.findByEmail(userData.email);  //findByEmail returns Promise, therefore can be used as in await statement
-                //如果above Promise got rejected, will jump to catch block
+                //如果above Promise got rejected, due to db issue, will jump to catch block
                 if (user?.validPassword(userData.password)) { //user can be null
-                    return resolve(user);
+                    return resolve(user); //if everything goes well, resolve
                 }
                 return reject(new Error('Invalid Credentials!!!')); //if email not found(user being null) or if password doesn't match
             } catch (error) { //db issue
@@ -85,9 +85,9 @@ module.exports = {
                     user.setPassword(userData.password); //will popluate this.salt and this.hashedPassword before saving them to mongoDB
                     user.save(function (error, data) {
                         if (error) {
-                            return reject(error);
+                            return reject(error); //db issue
                         }
-                        return resolve(data);
+                        return resolve(data); //if everything goes well, resolve
                     });
                 }
                 return reject(new Error(`User Already Exists with provided Details email: ${userData.email}`))  //db no issue, but user already exist
@@ -110,7 +110,7 @@ module.exports = {
     getUserDetailsByEmail: async function (email) { //another format but does same as above silings, no need to use Promise wrapper for async, but use Promise.resolve or Promise.reject inside
         try {
             const userDetails = await UserSchema.methods.findByEmail(email);
-            return Promise.resolve(userDetails);
+            return Promise.resolve(userDetails); //db no issue, but userDetails can be null or not null, when being null means no found this user
         } catch (error) { //db issue
             console.error(error);
             return Promise.reject(error);

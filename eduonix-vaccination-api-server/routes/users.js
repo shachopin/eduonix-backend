@@ -8,12 +8,12 @@ var router = express.Router();
 router.get('/:email', async function (req, res) {
   try {
     const { email } = req.params;
-    const data = await User.getUserDetailsByEmail(email);
+    const data = await User.getUserDetailsByEmail(email); //data can be null when not found the user
     res.send({
       success: true,
       data
     })
-  } catch (error) {
+  } catch (error) { //db issue
     console.error(error);
     res.status(500).send({
       success: false,
