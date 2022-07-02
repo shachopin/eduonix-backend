@@ -2,7 +2,7 @@
 var express = require('express');
 const { getAllAppointmentByUser } = require('../model/Appointment');
 const { userSignUp, validateLogin, editUser } = require('../model/User'); //其实getUserDetailsByEmail也可以在这里提取
-const User = require('../model/User'); //其实不需要，如果前面提取的话，其实完全不需要model import
+const User = require('../model/User'); //其实不需要，如果前面提取的话，其实完全不需要User model import, 直接用model里exposed的几个functions即可，beauty of fat model thin controller
 var router = express.Router();
 
 router.get('/:email', async function (req, res) {
