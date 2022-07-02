@@ -34,7 +34,7 @@ UserSchema.methods.validPassword = function (password) {
 } //not returning Promise because there is no async operation like interacting with MongoDB
 
 UserSchema.methods.checkDuplicate = function (email) { //return promise
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve, reject) => {//as the bottom sibling, you don't need to use outter Promise wrapper, you can do regular function, but return Promise.resolve(data) or Promise.reject(error)
         User.count({ email }, function (error, count) { //using mongoose callback, not mongoose promise, but use outter promise wrapper
             if (error) { //db issue
                 return reject(error);
@@ -45,7 +45,7 @@ UserSchema.methods.checkDuplicate = function (email) { //return promise
 } //因为里面没有this, 所以call的时候是UserSchema.methods.checkDuplicate 而不是用model instance
 
 UserSchema.methods.findByEmail = function (email) {
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve, reject) => {//as the bottom sibling, you don't need to use outter Promise wrapper, you can do regular function, but return Promise.resolve(data) or Promise.reject(error)
         User.findOne({ email }, function (error, data) { //using mongoose callback, not mongoose promise, but use outter promise wrapper
             if (error) { //db issue
                 return reject(error);
