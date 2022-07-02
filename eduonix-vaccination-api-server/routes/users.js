@@ -1,14 +1,14 @@
 //because you put business logic in model, fat model thin controller(router), controller/router part is extremely easy and straigtforward
 var express = require('express');
 const { getAllAppointmentByUser } = require('../model/Appointment');
-const { userSignUp, validateLogin, editUser } = require('../model/User');
-const User = require('../model/User');
+const { userSignUp, validateLogin, editUser } = require('../model/User'); //其实getUserDetailsByEmail也可以在这里提取
+const User = require('../model/User'); //其实不需要，如果前面提取的话，其实完全不需要model import
 var router = express.Router();
 
 router.get('/:email', async function (req, res) {
   try {
     const { email } = req.params;
-    const data = await User.getUserDetailsByEmail(email); //data can be null when not found the user
+    const data = await User.getUserDetailsByEmail(email); //data can be null when not found the user， 其实直接getUserDetailsByEmail就行，如果前面提取的话
     res.send({
       success: true,
       data
